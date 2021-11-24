@@ -9,7 +9,7 @@ class ConfessionGenerator:
 	## Constructor and initialisations
 	def __init__(self, confessions = []):
 		self.confessions = confessions
-		self.FONT = "assets/KGSueEllenFrancisco.tff"
+		self.FONT = "assets/KGSueEllenFrancisco.ttf"
 		self.IMAGE = "assets/uct_base.jpg"
 		self.pad = 57 	## padding
 		self.quantity = len(self.confessions)
@@ -30,14 +30,14 @@ class ConfessionGenerator:
 			if len(confession.split(" ")) > 70:
 				confession = confession.split(" ")
 				self.addConfession(" ".join(confession[:len(confession)//2]) + "...", overlay, bg_img)
-				overlay.save(f"confession_{cur_time}.png")
+				overlay.save(f"output/confession_{cur_time}.png")
 				overlay = Image.new("RGBA", (width, height), "white")
 				overlay.paste(bg_img, (0, 0))
 				self.addConfession("..." + " ".join(confession[(len(confession)//2):]), overlay, bg_img)
-				overlay.save(f"confession_{cur_time}(2).png")
+				overlay.save(f"output/confession_{cur_time}(2).png")
 			else:
 				self.addConfession(confession, overlay, bg_img)
-				overlay.save(f"confession_{cur_time}.png")
+				overlay.save(f"output/confession_{cur_time}.png")
 				
 
 	"""
@@ -45,7 +45,7 @@ class ConfessionGenerator:
 	"""
 	def addConfession(self, confession, overlay, bg_img):
 		draw = ImageDraw.Draw(overlay)
-		font = ImageFont.truetype(self.FONT, 55)
+		font = ImageFont.truetype(font=self.FONT, size=55)
 		width, height = bg_img.size
 		# Checking if there's a confesser
 		if '-' in confession and confession[-3:] != '...':
