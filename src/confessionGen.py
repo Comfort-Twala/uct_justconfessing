@@ -26,8 +26,18 @@ class ConfessionGenerator:
 			overlay = Image.new("RGBA", (width, height), "white")
 			overlay.paste(bg_img, (0, 0))
 			confession = self.confessions[amount]
-			self.addConfession(confession, overlay, bg_img)
-			overlay.save(f"confession_{cur_time}.png")
+			## Checking confession length (Split into 2 pages or not)
+			if len(confession.split(" ")) > 70:
+				confession = confession.split(" ")
+				self.addConfession(" ".join(confession[:len(confession)//2]) + "...", overlay, bg_img)
+				overlay.save(f"confession_{cur_time}.png")
+				overlay = Image.new("RGBA", (width, height), "white")
+				overlay.paste(bg_img, (0, 0))
+				self.addConfession("..." + " ".join(confession[(len(confession)//2):]), overlay, bg_img)
+				overlay.save(f"confession_{cur_time}(2).png")
+			else:
+				self.addConfession(confession, overlay, bg_img)
+				overlay.save(f"confession_{cur_time}.png")
 				
 
 	"""
