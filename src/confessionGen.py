@@ -18,7 +18,17 @@ class ConfessionGenerator:
 	generate method produce final confessions
 	"""	
 	def generate(self):
-		pass
+		bg_img = Image.open(self.IMAGE)
+		width, height = bg_img.size
+		## Generating as much confessions as confessions length
+		for amount in range(self.quantity):
+			cur_time = str(datetime.datetime.now().time())
+			overlay = Image.new("RGBA", (width, height), "white")
+			overlay.paste(bg_img, (0, 0))
+			confession = self.confessions[amount]
+			self.addConfession(confession, overlay, bg_img)
+			overlay.save(f"confession_{cur_time}.png")
+				
 
 	"""
 	addConfession method to write confession onto the background image
